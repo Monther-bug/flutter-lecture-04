@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lecture 04 · Your First Widgets</title>
+  <meta name="description" content="Mobile App Development with Flutter, Lecture 04: revision, then Scaffold, AppBar, Text and Container.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Sora:wght@600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="flutter-logo" viewBox="0 0 166 210">
+    <path fill="#44D1FD" d="M10 101 100 11h56L38 129z"/>
+    <path fill="#1FBCFD" d="M51 150 100 102h56l-77 76z"/>
+    <path fill="#08589C" d="M79 178 107 150l49 49h-56z"/>
+  </symbol>
+  <symbol id="i-git" viewBox="0 0 24 24"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M6 3v12"/><path d="M18 9a9 9 0 0 1-9 9"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2.5"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></symbol>
+  <symbol id="i-windows" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></symbol>
+  <symbol id="i-laptop" viewBox="0 0 24 24"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9"/><path d="M2 19.5 4 16h16l2 3.5a1 1 0 0 1-.9 1.5H2.9a1 1 0 0 1-.9-1.5z"/></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/><path d="M5 3v4M3 5h4M19 17v4M17 19h4"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></symbol>
+  <symbol id="i-disk" viewBox="0 0 24 24"><path d="M22 12H2"/><path d="M5.5 5.1 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-6.9A2 2 0 0 0 16.8 4H7.2a2 2 0 0 0-1.7 1.1z"/><path d="M6 16h.01M10 16h.01"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M5 12.6a11 11 0 0 1 14 0"/><path d="M1.4 9a16 16 0 0 1 21.2 0"/><path d="M8.5 16.1a6 6 0 0 1 7 0"/><path d="M12 20h.01"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.7 18-8-14a2 2 0 0 0-3.5 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6M10 22h4"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9l-.8-1.2A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/></symbol>
+  <symbol id="i-package" viewBox="0 0 24 24"><path d="m7.5 4.3 9 5.1"/><path d="M21 8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.7z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><path d="M12 19h8"/></symbol>
+  <symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
+  <symbol id="i-mouse" viewBox="0 0 24 24"><path d="m4 4 7 17 2.5-7.5L21 11z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-chrome" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M21.2 8H12M3.9 6.1 8.5 14M10.9 21.9l4.6-7.9"/></symbol>
+  <symbol id="i-cable" viewBox="0 0 24 24"><path d="M17 21v-2a1 1 0 0 1-1-1v-1a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1v2"/><path d="M19 15V6.5a3.5 3.5 0 0 0-7 0v11a3.5 3.5 0 0 1-7 0V9"/><path d="M3 9V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4z"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24"><path d="M12 7c-1.5-1.3-4.5-1.6-6 .5-1.6 2.3-1 6.6 1.3 9.9 1 1.4 2 2.6 3.2 2.5.9 0 1.2-.6 1.5-.6s.6.6 1.5.6c1.2.1 2.2-1.1 3.2-2.5 2.3-3.3 2.9-7.6 1.3-9.9-1.5-2.1-4.5-1.8-6-.5z"/><path d="M12 7c0-2 1-3.5 3-4"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+</svg>
+
+<div class="progress" aria-hidden="true"><span></span></div>
+
+<main class="deck">
+
+<!-- 01 · Title -->
+<section class="slide">
+  <div class="canvas"><div class="frame frame--title">
+    <div class="stagger">
+      <p class="kicker">Lecture 04 · Mobile App Development</p>
+      <h1 class="hero">Your First<br><span class="grad-text">Widgets</span></h1>
+      <p class="lead lead--hero">Scaffold, AppBar, Text and Container, plus a quick revision.</p>
+      <div class="chips">
+        <span class="chip"><span class="avatar">MI</span>Eng. Monther Ibrahim</span>
+        <span class="chip"><span class="avatar">M</span>Muhammad, M.Sc.</span>
+        <span class="chip">Fall 2026</span>
+      </div>
+      <p class="keys"><kbd>→</kbd> next &nbsp;·&nbsp; <kbd>F</kbd> fullscreen &nbsp;·&nbsp; <kbd>N</kbd> notes &nbsp;·&nbsp; <kbd>T</kbd> theme</p>
+    </div>
+    <div class="title-right" aria-hidden="true" style="display:grid; place-items:center;">
+      <div class="logo-glow" style="left:12%; top:10%;"></div>
+      <div class="ph" style="--pw:15.5cqw;">
+        <div class="ph__scr"><div class="ph__island"></div>
+          <div class="appbar" style="--ab:#2196F3; --abf:#fff;">My Profile</div>
+          <div class="pbody"><div class="box" style="--bx:#E3F2FD; font-size:1.2em;">Ahmed Ali<br>Flutter Student</div></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <aside class="notes">
+    <p>Today students build their first screen that looks like a real app: a top bar and a styled card.</p>
+  </aside>
+</section>
+
+<!-- 02 · Today -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Today</p>
+      <h2 class="title">Today's plan</h2>
+      <p class="lead">First a quick revision, then <b>four</b> new widgets, then we build something.</p>
+    </header>
+    <div class="body" style="grid-template-rows: 1fr auto;">
+      <div class="journey stagger" style="grid-template-columns: repeat(6, 1fr);">
+        <div class="stop"><div class="stop__dot"><svg class="ico"><use href="#i-activity"/></svg><span class="stop__n">1</span></div><h3>Revision</h3><p>main.dart in one minute</p></div>
+        <div class="stop"><div class="stop__dot"><svg class="ico"><use href="#i-phone"/></svg><span class="stop__n">2</span></div><h3>Scaffold</h3><p>the page</p></div>
+        <div class="stop"><div class="stop__dot"><svg class="ico"><use href="#i-windows"/></svg><span class="stop__n">3</span></div><h3>AppBar</h3><p>the top bar</p></div>
+        <div class="stop"><div class="stop__dot"><svg class="ico"><use href="#i-code"/></svg><span class="stop__n">4</span></div><h3>Text</h3><p>words &amp; styles</p></div>
+        <div class="stop"><div class="stop__dot"><svg class="ico"><use href="#i-package"/></svg><span class="stop__n">5</span></div><h3>Container</h3><p>a box</p></div>
+        <div class="stop"><div class="stop__dot"><svg class="ico"><use href="#i-star"/></svg><span class="stop__n">6</span></div><h3>Build it</h3><p>a profile card</p></div>
+      </div>
+      <div class="callout callout--ok goal"><svg class="ico"><use href="#i-target"/></svg><div><b>Goal:</b> build a screen with a <b>top bar</b> and a <b>styled card</b>, like a real app.</div></div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 04</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>About 20 minutes of revision, 45 minutes for the four widgets, and the rest for building the profile card together.</p>
+  </aside>
+</section>
+
+<!-- 03 · Revision: main.dart in one picture -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Revision</p>
+      <h2 class="title">Last lecture in one picture</h2>
+    </header>
+    <div class="body walk">
+      <div class="term code">
+        <div class="term__bar"><i></i><i></i><i></i><span>lib/main.dart</span></div>
+<pre class="hl" data-groups="1:g1;3-5:g2;7-8,19:g3;10-18:g4">import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Center(
+        child: Text('Hello, Flutter!'),
+      ),
+    );
+  }
+}</pre>
+      </div>
+      <div class="legend-groups stagger">
+        <div class="lg" style="--c:#13B9FD;"><span class="n">1</span><b>import</b><span>Brings in Flutter's toolbox</span></div>
+        <div class="lg" style="--c:#FFC857;"><span class="n">2</span><b>main() + runApp()</b><span>The app starts here and shows MyApp</span></div>
+        <div class="lg" style="--c:#4ADE80;"><span class="n">3</span><b>class MyApp</b><span>Our own widget, a StatelessWidget</span></div>
+        <div class="lg" style="--c:#C792EA;"><span class="n">4</span><b>build() → MaterialApp</b><span>What to show: the app wrapper and its first screen</span></div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 04</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Ask students to explain each colored part before you reveal the label. Cover the right side with your hand, or point at the colors one by one.</p>
+  </aside>
+</section>
+
+<!-- 04 · Quick check -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Revision</p>
+      <h2 class="title">Quick check</h2>
+      <p class="lead">Think first, then <b>click a card</b> to see the answer.</p>
+    </header>
+    <div class="body quiz">
+      <details class="qcard">
+        <summary><span class="qn">1</span><span>Where does every Flutter app start?<small>Click to show the answer</small></span></summary>
+        <div class="ans">In the <code>main()</code> function.</div>
+      </details>
+      <details class="qcard">
+        <summary><span class="qn">2</span><span>What does <code>runApp()</code> do?<small>Click to show the answer</small></span></summary>
+        <div class="ans">It puts your widget <b>on the screen</b>.</div>
+      </details>
+      <details class="qcard">
+        <summary><span class="qn">3</span><span>What is a StatelessWidget?<small>Click to show the answer</small></span></summary>
+        <div class="ans">A widget that <b>doesn't change</b> after it appears.</div>
+      </details>
+      <details class="qcard">
+        <summary><span class="qn">4</span><span>Which file has your app's name and packages?<small>Click to show the answer</small></span></summary>
+        <div class="ans"><code>pubspec.yaml</code></div>
+      </details>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 04</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Let students shout out answers before you click. Click a card to reveal its answer; click again to hide it.</p>
+  </aside>
+</section>
+
+<!-- 05 · Remember the red text? -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Widget 1 · Scaffold</p>
+      <h2 class="title">Remember the red text? Scaffold fixes it</h2>
+    </header>
+    <div class="body" style="grid-template-columns: 1fr auto 1fr; align-items: start;">
+      <div class="ph-col">
+        <span class="badge badge--warm">Before: no Scaffold</span>
+        <div class="ph ph--black" style="--pw:11cqw;">
+          <div class="ph__scr"><div class="ph__island"></div><div class="pbody"><span class="err-text">Hello,<br>Flutter!</span></div></div>
+        </div>
+        <div class="term code code--sm code--nonum" style="margin-top:1.2cqw;">
+<pre class="hl">home: Center(
+  child: Text('Hello, Flutter!'),
+),</pre>
+        </div>
+      </div>
+      <div class="vs" style="align-self:center;"><svg class="ico"><use href="#i-arrow-right"/></svg></div>
+      <div class="ph-col">
+        <span class="badge badge--ok">After: with Scaffold</span>
+        <div class="ph" style="--pw:11cqw;">
+          <div class="ph__scr"><div class="ph__island"></div><div class="pbody"><span class="plain-text">Hello, Flutter!</span></div></div>
+        </div>
+        <div class="term code code--sm code--nonum" style="margin-top:1.2cqw;">
+<pre class="hl" data-hl="1,2,4">home: Scaffold(
+  body: Center(
+    child: Text('Hello, Flutter!'),
+  ),
+),</pre>
+        </div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 04</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>The red text with yellow lines appears when Text has no Material page behind it. Scaffold gives the screen a proper Material page with a background, so the text looks normal.</p>
+    <p>Live demo: wrap <code>Center</code> in a <code>Scaffold</code>. In VS Code, put the cursor on Center, press <kbd>Ctrl</kbd> + <kbd>.</kbd> and choose "Wrap with widget…".</p>
+  </aside>
+</section>
+
+<!-- 06 · Scaffold layout -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Widget 1 · Scaffold</p>
+      <h2 class="title">Scaffold: a page with ready-made places</h2>
+    </header>
+    <div class="body" style="grid-template-columns: auto 1fr; gap: 3.5cqw; align-items: start;">
+      <div class="ph" style="--pw:15cqw;">
+        <div class="ph__scr" style="background:#FFFFFF;"><div class="ph__island"></div>
+          <div class="zone zone--appbar">appBar</div>
+          <div class="zone zone--body">body</div>
+          <div class="zone zone--fab">FAB</div>
+          <div class="zone zone--nav">bottomNavigationBar</div>
+        </div>
+      </div>
+      <div class="explain stagger">
+        <div class="defs">
+          <div class="def"><code>appBar:</code><span>The <b>top bar</b> with the page title</span></div>
+          <div class="def"><code>body:</code><span>The <b>main content</b> of the page</span></div>
+          <div class="def"><code>floatingActionButton:</code><span>A round button (FAB)</span></div>
+          <div class="def"><code>bottomNavigationBar:</code><span>Tabs at the bottom</span></div>
+          <div class="def"><code>backgroundColor:</code><span>The page color</span></div>
+        </div>
+        <div class="term code code--nonum">
+<pre class="hl">home: Scaffold(
+  appBar: AppBar(...),   // today
+  body: Center(...),     // today
+),</pre>
+        </div>
+        <div class="callout callout--info"><svg class="ico"><use href="#i-bulb"/></svg><div>Almost every screen in your app starts with a <b>Scaffold</b>.</div></div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 04</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>All the places are optional. Today we only fill <code>appBar</code> and <code>body</code>. The FAB and bottom navigation come in later lectures.</p>
+  </aside>
+</section>
+
+<!-- 07 · AppBar -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Widget 2 · AppBar</p>
+      <h2 class="title">AppBar: the top bar</h2>
+    </header>
+    <div class="body" style="grid-template-columns: 1.15fr .95fr auto; gap: 2cqw; align-items: start;">
+      <div class="term code">
+        <div class="term__bar"><i></i><i></i><i></i><span>lib/main.dart</span></div>
+<pre class="hl" data-hl="2-7">home: Scaffold(
+  appBar: AppBar(
+    title: const Text('My First App'),
+    backgroundColor: Colors.blue,
+    foregroundColor: Colors.white,
+    centerTitle: true,
+  ),
+  body: const Center(
+    child: Text('Hello, Flutter!'),
+  ),
+),</pre>
+      </div>
+      <div class="defs stagger">
+        <div class="def"><code>title:</code><span>The text in the bar</span></div>
+        <div class="def"><code>backgroundColor:</code><span>The bar's color</span></div>
+        <div class="def"><code>foregroundColor:</code><span>Text and icon color</span></div>
+        <div class="def"><code>centerTitle:</code><span><code>true</code> puts the title in the middle</span></div>
+      </div>
+      <div class="ph" style="--pw:13cqw;">
+        <div class="ph__scr"><div class="ph__island"></div>
+          <div class="appbar is-center" style="--ab:#2196F3; --abf:#fff;">My First App</div>
+          <div class="pbody"><span class="plain-text">Hello, Flutter!</span></div>
+        </div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 04</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p><code>Colors.blue</code> comes from Flutter's color list. Type <code>Colors.</code> and VS Code shows all colors with a small preview square.</p>
+    <p>Note that <code>title</code> takes a widget (a Text), not just a word.</p>
+  </aside>
+</section>
+
+<!-- 08 · Text -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Widget 3 · Text</p>
+      <h2 class="title">Text: show words, your style</h2>
+    </header>
+    <div class="body walk">
+      <div class="side">
+        <div class="term code code--lg">
+          <div class="term__bar"><i></i><i></i><i></i><span>lib/main.dart</span></div>
+<pre class="hl">Text(
+  'Hello, Flutter!',
+  textAlign: TextAlign.center,
+  style: TextStyle(
+    fontSize: 32,
+    fontWeight: FontWeight.bold,
+    color: Colors.teal,
+  ),
+)</pre>
+        </div>
+        <div class="callout callout--info"><svg class="ico"><use href="#i-bulb"/></svg><div><b>style:</b> takes a <code>TextStyle</code>: a list of how the text should look.</div></div>
+      </div>
+      <div class="tsx stagger">
+        <div class="tsx__row"><code>fontSize: 32</code><span class="sample" style="font-size:2.3cqw;">Hello</span></div>
+        <div class="tsx__row"><code>fontWeight: FontWeight.bold</code><span class="sample" style="font-weight:700;">Hello</span></div>
+        <div class="tsx__row"><code>color: Colors.teal</code><span class="sample" style="color:#009688;">Hello</span></div>
+        <div class="tsx__row"><code>fontStyle: FontStyle.italic</code><span class="sample" style="font-style:italic;">Hello</span></div>
+        <div class="tsx__row"><code>letterSpacing: 4</code><span class="sample" style="letter-spacing:.35cqw;">Hello</span></div>
+        <div class="tsx__row"><code>textAlign: TextAlign.center</code><span class="sample" style="text-align:center;">Hello</span></div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 04</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Live demo: change fontSize and color, then save. Hot reload shows each change instantly.</p>
+    <p>textAlign belongs to Text itself, not to TextStyle. That's a common mix-up.</p>
+  </aside>
+</section>
+
+<!-- 09 · Container: the box -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Widget 4 · Container</p>
+      <h2 class="title">Container: a box for your widgets</h2>
+    </header>
+    <div class="body" style="grid-template-columns: 1fr 1fr; gap: 3cqw; align-items: start;">
+      <div class="bm" aria-hidden="true">
+        <div class="bm__margin"><span class="bm__lbl">margin: space outside</span>
+          <div class="bm__box"><span class="bm__lbl">color: the box color</span>
+            <div class="bm__pad"><span class="bm__lbl">padding: space inside</span>
+              <div class="bm__child">child</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="explain stagger">
+        <div class="defs">
+          <div class="def"><code>width / height</code><span>The size of the box</span></div>
+          <div class="def"><code>color:</code><span>The box's background color</span></div>
+          <div class="def"><code>padding:</code><span>Space <b>inside</b> the box, around the child</span></div>
+          <div class="def"><code>margin:</code><span>Space <b>outside</b> the box</span></div>
+          <div class="def"><code>child:</code><span>The one widget inside the box</span></div>
+        </div>
+        <div class="callout callout--info"><svg class="ico"><use href="#i-package"/></svg><div>Like a <b>gift box</b>: padding is the soft paper inside, margin is the space between boxes.</div></div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 04</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Padding and margin take an <code>EdgeInsets</code>: <code>EdgeInsets.all(16)</code> means 16 on every side. <code>EdgeInsets.symmetric(horizontal: 20)</code> means left and right only.</p>
+  </aside>
+</section>
+
+<!-- 10 · Container + decoration -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Widget 4 · Container</p>
+      <h2 class="title">Rounded corners and borders: <code>decoration</code></h2>
+    </header>
+    <div class="body" style="grid-template-columns: 1.2fr .9fr auto; gap: 2cqw; align-items: start;">
+      <div class="term code">
+        <div class="term__bar"><i></i><i></i><i></i><span>lib/main.dart</span></div>
+<pre class="hl" data-hl="4-8">Container(
+  width: 220,
+  padding: const EdgeInsets.all(20),
+  decoration: BoxDecoration(
+    color: Colors.amber,
+    borderRadius: BorderRadius.circular(16),
+    border: Border.all(color: Colors.black, width: 2),
+  ),
+  child: const Text('I am a box!'),
+)</pre>
+      </div>
+      <div class="explain stagger">
+        <div class="defs">
+          <div class="def"><code>BoxDecoration</code><span>Extra style for the box</span></div>
+          <div class="def"><code>borderRadius:</code><span>Rounded corners</span></div>
+          <div class="def"><code>border:</code><span>A line around the box</span></div>
+        </div>
+        <div class="callout callout--warn"><svg class="ico"><use href="#i-alert"/></svg><div>Using <code>decoration</code>? Put <code>color</code> <b>inside</b> it, not next to it. Both together = error!</div></div>
+      </div>
+      <div class="ph" style="--pw:12.5cqw;">
+        <div class="ph__scr"><div class="ph__island"></div>
+          <div class="appbar" style="--ab:#2196F3; --abf:#fff;">Boxes</div>
+          <div class="pbody"><div class="box" style="--bx:#FFC107; border:.18em solid #000; width:70%;">I am a box!</div></div>
+        </div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 04</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>The error message is "Cannot provide both a color and a decoration". Show it live: add <code>color: Colors.red</code> next to the decoration and run.</p>
+  </aside>
+</section>
+
+<!-- 11 · Build it: profile card -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Build it together</p>
+      <h2 class="title">All four together: a profile card</h2>
+    </header>
+    <div class="body" style="grid-template-columns: 1.25fr .75fr; gap: 2.4cqw; align-items: start;">
+      <div class="term code code--sm">
+        <div class="term__bar"><i></i><i></i><i></i><span>lib/main.dart</span><span class="grow"></span><span>inside MaterialApp</span></div>
+<pre class="hl" data-start="14">home: Scaffold(
+  appBar: AppBar(
+    title: const Text('My Profile'),
+    backgroundColor: Colors.blue,
+    foregroundColor: Colors.white,
+  ),
+  body: Center(
+    child: Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.blue.shade50,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: const Text(
+        'Ahmed Ali\nFlutter Student',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 22),
+      ),
+    ),
+  ),
+),</pre>
+      </div>
+      <div class="center-stack" style="gap:1.4cqw;">
+        <div class="ph" style="--pw:13.5cqw;">
+          <div class="ph__scr"><div class="ph__island"></div>
+            <div class="appbar" style="--ab:#2196F3; --abf:#fff;">My Profile</div>
+            <div class="pbody"><div class="box" style="--bx:#E3F2FD; font-size:1.2em;">Ahmed Ali<br>Flutter Student</div></div>
+          </div>
+        </div>
+        <div class="callout callout--warn" style="font-size:1.05cqw;"><svg class="ico"><use href="#i-alert"/></svg><div>Remove <code>const</code> before <code>MaterialApp</code>: our colors aren't constant.</div></div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 04</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Build this step by step with the class: first the Scaffold with an AppBar, run it; then the Container, run it; then the styled Text.</p>
+    <p><code>\n</code> inside the text means "new line". If students keep <code>return const MaterialApp(</code> from last lecture, they get "Invalid constant value". Removing that <code>const</code> fixes it.</p>
+  </aside>
+</section>
+
+<!-- 12 · Widget tree -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Big picture</p>
+      <h2 class="title">The widget tree of our profile card</h2>
+    </header>
+    <div class="body" style="align-items:start;">
+      <div class="wt" style="transform: scale(1.2); transform-origin: top center;">
+        <ul><li>
+          <span class="nd">MaterialApp<small>the wrapper</small></span>
+          <ul><li>
+            <span class="slot">home:</span>
+            <span class="nd nd--hl">Scaffold<small>the page</small></span>
+            <ul>
+              <li>
+                <span class="slot">appBar:</span>
+                <span class="nd nd--hl">AppBar<small>the top bar</small></span>
+                <ul><li>
+                  <span class="slot">title:</span>
+                  <span class="nd nd--hl">Text<small>'My Profile'</small></span>
+                </li></ul>
+              </li>
+              <li>
+                <span class="slot">body:</span>
+                <span class="nd">Center<small>the middle</small></span>
+                <ul><li>
+                  <span class="slot">child:</span>
+                  <span class="nd nd--hl">Container<small>the box</small></span>
+                  <ul><li>
+                    <span class="slot">child:</span>
+                    <span class="nd nd--hl">Text<small>'Ahmed Ali…'</small></span>
+                  </li></ul>
+                </li></ul>
+              </li>
+            </ul>
+          </li></ul>
+        </li></ul>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 04</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>The highlighted boxes are today's four widgets. Ask students to point to each one in the code on the previous slide.</p>
+  </aside>
+</section>
+
+<!-- 13 · Common mistakes -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Troubleshooting</p>
+      <h2 class="title">4 mistakes you'll probably make today</h2>
+    </header>
+    <div class="body probs">
+      <table class="tbl tbl--probs">
+        <tbody>
+          <tr><td><span class="err">Cannot provide both a color and a decoration</span></td><td>Move <code>color</code> <b>inside</b> <code>BoxDecoration</code>.</td></tr>
+          <tr><td><span class="err">Invalid constant value.</span></td><td>Remove the <code>const</code> in front of a widget that has changing values.</td></tr>
+          <tr><td><span class="err">Undefined name 'colors'.</span></td><td>Capital C: <code>Colors.blue</code>, not <code>colors.blue</code>.</td></tr>
+          <tr><td><span class="err">Expected to find ','.</span></td><td>Each property ends with a comma: <code>title: …,</code></td></tr>
+        </tbody>
+      </table>
+      <div class="callout callout--info"><svg class="ico"><use href="#i-bulb"/></svg><div><b>Tip:</b> put the cursor on a widget and press <kbd>Ctrl</kbd> + <kbd>.</kbd> to wrap it in a Center, Container or another widget.</div></div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 04</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>The color + decoration error appears as a red error screen when the app runs, not as a red underline in the editor. Show both kinds of errors.</p>
+    <p>On a Mac the quick-fix shortcut is Cmd + .</p>
+  </aside>
+</section>
+
+<!-- 14 · Practice + Questions -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Wrap-up</p>
+      <h2 class="title">Build your own profile card</h2>
+    </header>
+    <div class="body wrap">
+      <article class="card">
+        <h3>Practice</h3>
+        <ul class="checklist stagger">
+          <li><span>An <b>AppBar</b> with your name as the title</span></li>
+          <li><span>Change the AppBar <b>colors</b></span></li>
+          <li><span>A <b>Container</b> with rounded corners and your favorite color</span></li>
+          <li><span>A bold <b>Text</b> inside with your major and university</span></li>
+          <li><span>Bonus: add a <b>border</b> to the box</span></li>
+        </ul>
+      </article>
+      <div class="qa">
+        <div class="qa__big grad-text">Questions?</div>
+        <div class="card next">
+          <h4>Next lecture</h4>
+          <p>Row, Column &amp; more widgets</p>
+        </div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 04</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Ask students to send a screenshot of their profile card to the class group. It's a nice warm-up for Project 1.</p>
+  </aside>
+</section>
+
+</main>
+
+<div class="notes-panel" hidden>
+  <h4 class="np-title">Speaker notes</h4>
+  <div class="np-body"></div>
+</div>
+<div class="hint" aria-hidden="true"><kbd>←</kbd> <kbd>→</kbd> navigate · <kbd>F</kbd> fullscreen · <kbd>N</kbd> notes · <kbd>T</kbd> theme</div>
+
+<script src="js/deck.js"></script>
+</body>
+</html>
